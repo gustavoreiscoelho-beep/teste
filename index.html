@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS STUDY · Premium</title>
+<meta name="description" content="Plataforma premium para aprovação em concursos. Edital, revisões espaçadas, mapas mentais, resumos, flashcards e estatísticas.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="preload" href="css/nexus.css" as="style">
+<link rel="stylesheet" href="css/nexus.css">
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo">NX</div>
+      <div class="sb-brand-text">
+        <div class="sb-brand-name">NEXUS</div>
+        <div class="sb-brand-tag">STUDY · PREMIUM</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section">
+        <div class="sb-section-label">Visão Geral</div>
+        <button class="sb-nav-item is-active" data-route="dashboard">
+          <span class="sb-nav-icon">⌂</span>
+          <span class="sb-nav-label">Dashboard</span>
+        </button>
+        <button class="sb-nav-item" data-route="edital">
+          <span class="sb-nav-icon">▤</span>
+          <span class="sb-nav-label">Edital</span>
+          <span class="sb-nav-badge" id="badge-edital"></span>
+        </button>
+        <button class="sb-nav-item" data-route="cronograma">
+          <span class="sb-nav-icon">▦</span>
+          <span class="sb-nav-label">Cronograma</span>
+        </button>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-section-label">Estudo</div>
+        <button class="sb-nav-item" data-route="revisoes">
+          <span class="sb-nav-icon">↻</span>
+          <span class="sb-nav-label">Revisões</span>
+          <span class="sb-nav-badge" id="badge-revisoes"></span>
+        </button>
+        <button class="sb-nav-item" data-route="flashcards">
+          <span class="sb-nav-icon">⊞</span>
+          <span class="sb-nav-label">Flashcards</span>
+        </button>
+        <button class="sb-nav-item" data-route="erros">
+          <span class="sb-nav-icon">⊗</span>
+          <span class="sb-nav-label">Caderno de Erros</span>
+          <span class="sb-nav-badge" id="badge-erros"></span>
+        </button>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-section-label">Conhecimento</div>
+        <button class="sb-nav-item" data-route="resumos">
+          <span class="sb-nav-icon">▭</span>
+          <span class="sb-nav-label">Resumos</span>
+        </button>
+        <button class="sb-nav-item" data-route="mapas">
+          <span class="sb-nav-icon">⌬</span>
+          <span class="sb-nav-label">Mapas Mentais</span>
+        </button>
+      </div>
+
+      <div class="sb-section">
+        <div class="sb-section-label">Análise</div>
+        <button class="sb-nav-item" data-route="estatisticas">
+          <span class="sb-nav-icon">▱</span>
+          <span class="sb-nav-label">Estatísticas</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="sb-foot">
+      <div class="sb-countdown" id="sb-countdown">
+        <div class="sb-cd-num" id="cd-days">—</div>
+        <div class="sb-cd-label">dias para a prova</div>
+        <div class="sb-cd-sub" id="cd-exam">configure no perfil</div>
+      </div>
+      <button class="sb-foot-btn" data-action="config">⚙ Configurações</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="topbar-burger" data-action="toggle-sidebar" aria-label="Menu">≡</button>
+      <div class="topbar-info">
+        <h1 class="topbar-title" id="topbar-title">Dashboard</h1>
+        <p class="topbar-sub" id="topbar-sub">Visão geral da sua preparação</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-timer" id="topbar-timer" data-action="timer-open">
+          <span class="topbar-timer-dot"></span>
+          <span class="topbar-timer-label" id="topbar-timer-label">Iniciar Estudo</span>
+        </button>
+        <button class="topbar-icon" data-action="theme" title="Alternar tema" aria-label="Tema">
+          <span class="theme-icon-dark">◐</span>
+          <span class="theme-icon-light">☀</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content" id="content"></div>
+  </main>
+
+</div>
+
+<div class="drawer-backdrop" id="drawer-backdrop" data-close="settings"></div>
+<aside class="drawer" id="drawer-settings">
+  <header class="drawer-head">
+    <div class="drawer-title">Configurações</div>
+    <button class="drawer-close" data-close="settings" aria-label="Fechar">✕</button>
+  </header>
+  <div class="drawer-body" id="drawer-settings-body"></div>
+</aside>
+
+<div class="modal-stack" id="modal-stack"></div>
+<div class="toast-stack" id="toast-stack"></div>
+
+<div class="timer-fs" id="timer-fs">
+  <div class="timer-fs-bg"></div>
+  <button class="timer-fs-close" data-action="timer-close" aria-label="Fechar">✕</button>
+  <div class="timer-fs-card">
+    <div class="timer-fs-modes">
+      <button class="timer-mode is-active" data-mode="cronometro">Cronômetro</button>
+      <button class="timer-mode" data-mode="pomodoro">Pomodoro 25min</button>
+      <button class="timer-mode" data-mode="timer">Timer 30min</button>
+    </div>
+    <div class="timer-fs-display" id="timer-display">00:00:00</div>
+    <div class="timer-fs-discipline" id="timer-discipline">Selecione a disciplina ↓</div>
+    <div class="timer-fs-actions">
+      <button class="btn btn-ghost" data-action="timer-pick-disc">Disciplina</button>
+      <button class="btn btn-primary btn-large" id="timer-toggle" data-action="timer-toggle">Iniciar</button>
+      <button class="btn btn-ghost" data-action="timer-finish">Finalizar</button>
+    </div>
+  </div>
+</div>
+
+<div class="onboarding" id="onboarding" style="display:none">
+  <div class="ob-bg"></div>
+  <div class="ob-card" id="ob-card"></div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/views.js"></script>
+</body>
+</html>
